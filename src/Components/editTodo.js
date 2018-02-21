@@ -56,6 +56,10 @@ export default class EditTodo extends React.Component {
         })
     }
 
+    limitedText(value){
+        return (value.length > 8 ? `${value.substr(0, 8)}...` : value )
+    }
+
     render() {
         if (this.state.isEditable) {
             return (
@@ -71,7 +75,7 @@ export default class EditTodo extends React.Component {
                     <Button
                         onPress={e => this.handleCancel()}
                         title="Cancel"
-                        color="lightblue"/>
+                        color="#FF4500"/>
                     <TextInput style={styles.input}
                                underlineColorAndroid="transparent"
                                value={this.state.value}
@@ -86,6 +90,7 @@ export default class EditTodo extends React.Component {
                     margin: 2,
                     height: 35
                 }}>
+
                     <Button
                         onPress={() => TodoActions.toggleTodo(this.state.id)}
                         title="Done"
@@ -94,8 +99,11 @@ export default class EditTodo extends React.Component {
                         onPress={e => this.edittodo()}
                         title="___Edit"
                         color="orange"/>
-                    <Text style={styles.textTodo}>
-                        {this.state.value}
+                    <Text
+                        style={styles.textTodo}
+                        numberOfLines={1}
+                    >
+                        {this.limitedText(this.state.value)}
                     </Text>
                 </View>
             )
@@ -107,12 +115,12 @@ const styles = StyleSheet.create({
     textTodo: {
         fontSize: 18,
         margin: 5,
-        color: 'gray'
+        color: '#696969'
     },
     input: {
         height: 35,
-        width: 'auto',
-        borderColor: 'green',
+        width: 100,
+        borderColor: '#FF4500',
         borderWidth: 2
     },
 });

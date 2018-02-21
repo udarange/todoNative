@@ -18,8 +18,13 @@ import React from "react";
 import AltContainer from "alt-container";
 import TodoStore from "../Stores/store";
 import EditTodo from "./editTodo";
-import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import TodoActions from "../Actions/actions";
+
+export function limitedText(value) {
+    return (value.length > 8 ? `${value.substr(0, 8)}...` : value )
+}
+
 
 export function Todo({isDone, text, id}) {
     if (isDone) {
@@ -36,9 +41,9 @@ export function Todo({isDone, text, id}) {
                 <Button
                     onPress={() => TodoActions.deleteTodo(id)}
                     title="Delete"
-                    color="red"/>
+                    color="khaki"/>
                 <Text style={styles.textTodoDone}>
-                    {text}
+                    {limitedText(text)}
                 </Text>
             </View>
         )
@@ -54,14 +59,17 @@ function TodosList({todos}) {
         <View style={{
             flex: 1,
             flexDirection: 'column',
+            margin: 10
+
         }}>
             <Text style={styles.listheder}>
                 Show All List: {todos.length} items
             </Text>
-
-            {todos.map((t) => (
-                <View key={t.id}><Todo id={t.id} isDone={t.isDone} text={t.text}/></View>
-            ))}
+            <ScrollView>
+                {todos.map((t) => (
+                    <View key={t.id}><Todo id={t.id} isDone={t.isDone} text={t.text}/></View>
+                ))}
+            </ScrollView>
         </View>
     )
 }
@@ -92,6 +100,6 @@ const styles = StyleSheet.create({
     textTodoDone: {
         fontSize: 18,
         margin: 5,
-        color: 'red'
+        color: '#D3D3D3'
     },
 });
